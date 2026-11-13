@@ -1,0 +1,15 @@
+{
+  "extends": "../../tooling/tsconfig/web.json",
+  "compilerOptions": {
+    "composite": false,
+    "declaration": false,
+    "declarationMap": false,
+    "noEmit": true,
+    "types": ["node"],
+    "paths": {
+      "@/*": ["../../apps/api/src/*"],
+      "cloudflare:workers": ["./src/stubs/cloudflare-workers.ts"]
+    }
+  },
+  "include": ["src/**/*.ts"]
+}

@@ -1,0 +1,13 @@
+// The Worker's types (tooling/tsconfig/worker.json: ES2022 + WebWorker and
+// @cloudflare/workers-types, which also declares `cloudflare:workers`, the
+// module the app reads its bindings from). Strict, as the rest of the
+// workspace is. Wrangler bundles src/index.ts itself, so nothing is emitted.
+{
+  "extends": "../../tooling/tsconfig/worker.json",
+  "compilerOptions": {
+    "composite": false,
+    "noEmit": true
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules", "dist"]
+}
