@@ -1,0 +1,42 @@
+// The Worker binds nothing of its own, so this file is committed as-is (no
+// wiring template). Orun deploys with `--env stage` / `--env prod`; wrangler
+// names the Worker elysia-api-api-<env> from the top-level name. Each
+// environment's ENVIRONMENT var is what GET /health reports.
+//
+// How the Elysia app runs here:
+// - `main` is the app module itself: wrangler bundles src/index.ts (Elysia and
+//   its TypeBox validator included), and its default export, the app compiled
+//   by Elysia's Cloudflare adapter, is what the runtime calls. There is no
+//   separate framework build: the package's `build` is wrangler's dry run.
+// - No nodejs_compat: Elysia's Cloudflare adapter is web-standard (Request,
+//   Response, URL) and needs no Node.js API.
+// - No assets: the template serves its page from code and links its logo.
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "elysia-api-api",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-10-01",
+  "observability": {
+    "enabled": true
+  },
+  "vars": {
+    "ENVIRONMENT": "local"
+  },
+  "env": {
+    "dev": {
+      "vars": {
+        "ENVIRONMENT": "dev"
+      }
+    },
+    "stage": {
+      "vars": {
+        "ENVIRONMENT": "stage"
+      }
+    },
+    "prod": {
+      "vars": {
+        "ENVIRONMENT": "prod"
+      }
+    }
+  }
+}
